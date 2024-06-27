@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookings',  # Добавьте ваше приложение сюда
+    'bookings',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,7 @@ DATABASES = {
         'USER': 'p4rest_1',
         'PASSWORD': 'vnRj2gpaKUHLixxg',
         'HOST': 'sql733.your-server.de',
-        'PORT': '',  # Оставьте пустым, если у вас нет порта
+        'PORT': '',
     }
 }
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Book My Table</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>BOOK MY TABLE</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'admin_login' %}">Admin login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="content-background">
+            <h1>Welcome to Book My Table</h1>
+            <p>Your favorite restaurant booking service.</p>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'book_table' %}" class="book-button">Book Online</a>
+            <div class="button-group">
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <footer>
+        <p>
+            <a href="https://facebook.com" target="_blank">
+                <img src="{% static 'assets/icons/facebook.png' %}" alt="Facebook" class="icon">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="{% static 'assets/icons/instagram.png' %}" alt="Instagram" class="icon">
+            </a>
+        </p>
+        <p>&copy; 2024 Restaurant. All rights reserved.</p>
+    </footer>
+</body>
+</html>

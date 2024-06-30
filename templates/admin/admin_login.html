@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Book My Table</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
-</head>
-<body>
-    <header class="admin-header">
-        <h1>Admin Panel - BOOK MY TABLE</h1>
-    </header>
-    <div class="admin-container">
-        <div class="form-container admin-form-container">
-            <h2>Admin Login</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="button">Login</button>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome, Admin. This is your dashboard.</p>
+{% endblock %}

@@ -1,45 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Table - Book My Table</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header>
-        <h1>BOOK MY TABLE</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'admin_login' %}">Admin login</a></li>
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
+{% extends 'base.html' %}
+
+{% block title %}Book a Table - Restaurant{% endblock %}
+
+{% block extra_head %}
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="form-background">
+        <h1>Book a Table</h1>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
             </ul>
-        </nav>
-    </header>
-    <div class="container">
-        <div class="form-container">
-            <h2>Book a Table</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Book Now</button>
-            </form>
-        </div>
+        {% endif %}
+        <form id="bookingForm" method="post">
+            {% csrf_token %}
+            <div class="textbox">
+                <label for="date">Date</label>
+                <input type="text" id="date" name="date" required>
+            </div>
+            <div class="textbox">
+                <label for="time">Time</label>
+                <input type="text" id="time" name="time" required>
+            </div>
+            <div class="textbox">
+                <label for="people">Number of People</label>
+                <input type="number" id="people" name="people" min="1" max="20" required>
+            </div>
+            <div class="textbox">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <input type="submit" class="btn" value="Book Now">
+        </form>
     </div>
-    <footer>
-        <p>
-            <a href="https://facebook.com" target="_blank">
-                <img src="{% static 'assets/icons/facebook.png' %}" alt="Facebook" class="icon">
-            </a>
-            <a href="https://instagram.com" target="_blank">
-                <img src="{% static 'assets/icons/instagram.png' %}" alt="Instagram" class="icon">
-            </a>
-        </p>
-        <p>&copy; 2024 Restaurant. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flatpickr for date picker
+        flatpickr("#date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function(selectedDates, dateStr, instance) {
+                const date = new Date(dateStr);
+                const day = date.getDay();
+                const timeInput = document.getElementById('time');
+                if (day === 0) { // Sunday
+                    timeInput._flatpickr.set('minTime', '12:00');
+                    timeInput._flatpickr.set('maxTime', '20:00');
+                } else {
+                    timeInput._flatpickr.set('minTime', '08:00');
+                    timeInput._flatpickr.set('maxTime', '21:00');
+                }
+            }
+        });
+
+        // Initialize Flatpickr for time picker
+        flatpickr("#time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            minTime: "08:00",
+            maxTime: "21:00"
+        });
+    });
+</script>
+{% endblock %}

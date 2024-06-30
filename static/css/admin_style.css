@@ -5,10 +5,13 @@ body {
     margin: 0;
     padding: 0;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.admin-header {
-    background-color: #444;
+header {
+    background-color: #222;
     color: #fff;
     padding: 10px 0;
     text-align: center;
@@ -16,49 +19,70 @@ body {
     border-bottom-right-radius: 25px;
 }
 
-.admin-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+nav ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.admin-form-container {
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 100px;
+    flex: 1;
+}
+
+.form-background, .content-background {
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 20px;
-    border-radius: 5px;
+    margin: 100px auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 10px auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: #fff;
     color: #000;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
+button, .button {
+    padding: 10px 20px;
     background-color: #f4a442;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     color: #000;
     font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    width: 150px;
 }
 
-button:hover {
+button:hover, .button:hover {
     background-color: #e59500;
 }
 
-h2 {
+h2, h1 {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -74,4 +98,71 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    margin-top: auto; /* Added to push the footer to the bottom */
+}
+
+footer a {
+    color: #fff;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: #f4a442;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* Notification */
+.notification {
+    display: none;
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f4a442;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.notification.show {
+    display: block;
+    top: 20px;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding-top: 50px;
+    }
+
+    .form-background, .content-background {
+        width: 90%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        position: static;
+    }
+
+    .button-group .login-button, .button-group .signup-button {
+        position: static;
+        margin-top: 10px;
+    }
 }

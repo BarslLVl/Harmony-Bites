@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Restaurant{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'assets/icons/favicon.ico' %}" type="image/x-icon">
+    <script src="{% static 'js/script.js' %}" defer></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body data-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}">
+    <header>
+        <h1>BOOK MY TABLE</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+                <li><a href="{% url 'contactus' %}">Contact Us</a></li>
+                <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <a href="https://www.facebook.com" target="_blank">
+            <img src="{% static 'assets/icons/facebook.png' %}" alt="Facebook" class="icon">
+        </a>
+        <a href="https://www.instagram.com" target="_blank">
+            <img src="{% static 'assets/icons/instagram.png' %}" alt="Instagram" class="icon">
+        </a>
+        <p>&copy; 2024 Book My Table. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

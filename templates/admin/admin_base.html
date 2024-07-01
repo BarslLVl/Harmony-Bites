@@ -1,23 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Admin - Restaurant{% endblock %}</title>
-    {% load static %}
+    <title>{% block title %}Admin{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
-    <link rel="icon" href="{% static 'assets/icons/favicon.ico' %}" type="image/x-icon">
-    <script src="{% static 'js/script.js' %}" defer></script>
-    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <header>
-        <h1>ADMIN DASHBOARD</h1>
+        <h1>Admin Panel</h1>
         <nav>
             <ul>
                 <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'home' %}">Back to Site</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'admin_users' %}">Users</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -25,9 +29,7 @@
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>&copy; 2024 Restaurant. All rights reserved.</p>
+        <p>&copy; 2024 Admin Panel</p>
     </footer>
-    <div id="notification" class="notification">Please log in to book a table.</div>
-    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

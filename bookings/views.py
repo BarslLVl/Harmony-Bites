@@ -3,11 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from django.urls import reverse_lazy
 from .forms import SignUpForm, UserEditForm, BookingForm
-from .models import Booking
+from .models import Booking, User
 
 class AdminLoginView(LoginView):
     template_name = 'registration/admin_login.html'
+
+class UserLoginView(LoginView):
+    template_name = 'registration/login.html'
 
 def index(request):
     return render(request, 'bookings/index.html')
@@ -20,7 +24,7 @@ def book_table(request):
             booking = form.save(commit=False)
             booking.user = request.user
             booking.save()
-            messages.success(request, 'Booking successful.')
+            messages.success(request, 'Booking successfully created.')
             return redirect('booking_success')
     else:
         form = BookingForm()
@@ -42,10 +46,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            user = form.save()
             login(request, user)
             return redirect('profile')
     else:
@@ -54,8 +55,11 @@ def signup(request):
 
 @login_required
 def admin_dashboard(request):
+    if not request.user.is_superuser:
+        return redirect('index')
+    users = User.objects.all()
     bookings = Booking.objects.all()
-    return render(request, 'admin_dashboard.html', {'bookings': bookings})
+    return render(request, 'admin/admin_dashboard.html', {'users': users, 'bookings': bookings})
 
 @login_required
 def profile(request):
@@ -79,13 +83,50 @@ def profile_bookings(request):
     return render(request, 'accounts/profile_bookings.html', {'bookings': bookings})
 
 @login_required
-def delete_booking(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id)
+def delete_booking(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
     if request.method == 'POST':
         booking.delete()
         messages.success(request, 'Booking cancelled successfully.')
         return redirect('profile_bookings')
-    return render(request, 'accounts/delete_booking.html', {'booking': booking})
+    return render(request, 'admin/confirm_delete.html', {'object': booking})
 
-def open_time(request):
-    return render(request, 'bookings/open_time.html')
+@login_required
+def edit_booking(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Booking updated successfully.')
+            return redirect('profile_bookings')
+    else:
+        form = BookingForm(instance=booking)
+    return render(request, 'admin/edit_booking.html', {'form': form})
+
+@login_required
+def admin_users(request):
+    users = User.objects.all()
+    return render(request, 'admin/users.html', {'users': users})
+
+@login_required
+def edit_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User updated successfully.')
+            return redirect('admin_users')
+    else:
+        form = UserEditForm(instance=user)
+    return render(request, 'admin/edit_user.html', {'form': form})
+
+@login_required
+def delete_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, 'User deleted successfully.')
+        return redirect('admin_users')
+    return render(request, 'admin/confirm_delete.html', {'object': user})

@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends 'admin/admin_base.html' %}
 
-{% block title %}Edit User - Book My Table{% endblock %}
+{% block title %}Edit User{% endblock %}
 
 {% block content %}
-    <div class="form-background">
-        <h2>Edit User</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="button">Save Changes</button>
-        </form>
-    </div>
+<div class="container">
+    <h2>Edit User</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Save</button>
+    </form>
+</div>
 {% endblock %}

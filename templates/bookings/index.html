@@ -3,10 +3,11 @@
 {% block title %}Home - Restaurant{% endblock %}
 
 {% block content %}
-<div class="welcome-container">
-    <h1>Welcome to Book My Table</h1>
-    <p>Your favorite restaurant booking service.</p>
-    <a href="{% url 'book_table' %}" class="btn book-button">Book Now</a>
-</div>
-<div class="notification"></div>
+<main class="main-content">
+    <div class="welcome-container">
+        <h1>Welcome to Book My Table</h1>
+        <p>Your favorite restaurant booking service.</p>
+        <a href="{% url 'book_table' %}" class="btn">Book Now</a>
+    </div>
+</main>
 {% endblock %}

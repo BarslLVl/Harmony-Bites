@@ -20,22 +20,7 @@
         {% endif %}
         <form id="bookingForm" method="post">
             {% csrf_token %}
-            <div class="textbox">
-                <label for="date">Date</label>
-                <input type="text" id="date" name="date" required>
-            </div>
-            <div class="textbox">
-                <label for="time">Time</label>
-                <input type="text" id="time" name="time" required>
-            </div>
-            <div class="textbox">
-                <label for="people">Number of People</label>
-                <input type="number" id="people" name="people" min="1" max="20" required>
-            </div>
-            <div class="textbox">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
+            {{ form.as_p }}
             <input type="submit" class="btn" value="Book Now">
         </form>
     </div>
@@ -47,14 +32,13 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Flatpickr for date picker
-        flatpickr("#date", {
+        flatpickr("#id_date", {
             dateFormat: "Y-m-d",
             minDate: "today",
             onChange: function(selectedDates, dateStr, instance) {
                 const date = new Date(dateStr);
                 const day = date.getDay();
-                const timeInput = document.getElementById('time');
+                const timeInput = document.getElementById('id_time');
                 if (day === 0) { // Sunday
                     timeInput._flatpickr.set('minTime', '12:00');
                     timeInput._flatpickr.set('maxTime', '20:00');
@@ -65,8 +49,7 @@
             }
         });
 
-        // Initialize Flatpickr for time picker
-        flatpickr("#time", {
+        flatpickr("#id_time", {
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",

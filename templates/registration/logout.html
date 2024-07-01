@@ -1,12 +1,11 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Logout - Book My Table{% endblock %}
+{% block title %}Logout{% endblock %}
 
 {% block content %}
-    <h1>Logout</h1>
-    <p>Are you sure you want to log out?</p>
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="button">Logout</button>
-    </form>
+<h2>Are you sure you want to logout?</h2>
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn">Logout</button>
+</form>
 {% endblock %}

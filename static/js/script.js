@@ -23,3 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 });
+
+// Dropdown menu for user icon
+document.addEventListener('DOMContentLoaded', function() {
+    const userIcon = document.querySelector('.user-icon img');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    if (userIcon && dropdownMenu) {
+        userIcon.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    }
+});

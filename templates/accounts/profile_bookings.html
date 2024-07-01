@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-background">
+    <h1 class="heading">My Bookings</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if bookings %}
+        <ul class="bookings-list">
+            {% for booking in bookings %}
+                <li>Table {{ booking.table.number }} on {{ booking.date }} at {{ booking.time }}
+                    <form method="post" action="{% url 'delete_booking' booking.id %}" class="cancel-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-cancel">Cancel</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-bookings">You have no active bookings.</p>
+        <a href="{% url 'book_table' %}" class="btn-book-now">Book Now</a>
+    {% endif %}
+</div>
+{% endblock %}

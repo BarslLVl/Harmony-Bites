@@ -1,9 +1,9 @@
-from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, UserEditForm, BookingForm
 from .models import Booking
 
 class AdminLoginView(LoginView):
@@ -14,8 +14,17 @@ def index(request):
 
 @login_required
 def book_table(request):
-    # Your booking logic here
-    return render(request, 'bookings/book_table.html')
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.save()
+            messages.success(request, 'Booking successful.')
+            return redirect('booking_success')
+    else:
+        form = BookingForm()
+    return render(request, 'bookings/book_table.html', {'form': form})
 
 def booking_success(request):
     return render(request, 'bookings/booking_success.html')
@@ -38,7 +47,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('profile')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -49,24 +58,34 @@ def admin_dashboard(request):
     return render(request, 'admin_dashboard.html', {'bookings': bookings})
 
 @login_required
-def edit_user(request, user_id):
-    # Your edit user logic here
-    return render(request, 'admin_dashboard.html')
+def profile(request):
+    return render(request, 'accounts/profile.html')
 
 @login_required
-def delete_user(request, user_id):
-    # Your delete user logic here
-    return render(request, 'admin_dashboard.html')
+def profile_settings(request):
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile')
+    else:
+        form = UserEditForm(instance=request.user)
+    return render(request, 'accounts/profile_settings.html', {'form': form})
 
 @login_required
-def edit_booking(request, booking_id):
-    # Your edit booking logic here
-    return render(request, 'admin_dashboard.html')
+def profile_bookings(request):
+    bookings = Booking.objects.filter(user=request.user)
+    return render(request, 'accounts/profile_bookings.html', {'bookings': bookings})
 
 @login_required
 def delete_booking(request, booking_id):
-    # Your delete booking logic here
-    return render(request, 'admin_dashboard.html')
+    booking = get_object_or_404(Booking, id=booking_id)
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, 'Booking cancelled successfully.')
+        return redirect('profile_bookings')
+    return render(request, 'accounts/delete_booking.html', {'booking': booking})
 
 def open_time(request):
     return render(request, 'bookings/open_time.html')

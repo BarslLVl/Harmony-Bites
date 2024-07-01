@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings - Book My Table{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-background">
+        <h2>My Bookings</h2>
+        {% if bookings %}
+            <ul>
+                {% for booking in bookings %}
+                    <li>{{ booking.date }} at {{ booking.time }} - Table {{ booking.table.number }}
+                        <a href="{% url 'delete_booking' booking.id %}" class="button">Cancel Booking</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No active bookings.</p>
+            <a href="{% url 'book_table' %}" class="button">Book Now</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

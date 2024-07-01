@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<div class="content-background">
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to cancel your booking for Table {{ booking.table.number }} on {{ booking.date }} at {{ booking.time }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">Yes, cancel booking</button>
+        <a href="{% url 'profile_bookings' %}" class="btn">No, go back</a>
+    </form>
+</div>
+{% endblock %}

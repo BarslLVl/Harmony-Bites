@@ -7,11 +7,33 @@
     <div class="content-background">
         <h1>Contact Us</h1>
         <p>If you have any questions, feel free to reach out to us:</p>
-        <ul>
-            <li>Email: contact@restaurant.com</li>
-            <li>Phone: +1 234 567 890</li>
-            <li>Address: 123 Food Street, Flavor Town</li>
+        <ul class="contact-info">
+            <li><strong>Email:</strong> contact@restaurant.com</li>
+            <li><strong>Phone:</strong> +1 234 567 890</li>
+            <li><strong>Address:</strong> 123 Food Street, Flavor Town</li>
         </ul>
+        
+        <!-- Google Map -->
+        <div id="map" class="map-container"></div>
     </div>
 </div>
+
+<!-- Google Maps API -->
+<script>
+    function initMap() {
+        // The location of the restaurant
+        const restaurantLocation = { lat: 40.712776, lng: -74.005974 }; // Example coordinates (New York City)
+        // The map, centered at the restaurant
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center: restaurantLocation,
+        });
+        // The marker, positioned at the restaurant
+        const marker = new google.maps.Marker({
+            position: restaurantLocation,
+            map: map,
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 {% endblock %}

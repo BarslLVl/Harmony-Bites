@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from .models import Booking
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
@@ -9,14 +9,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
-#Booking Form
-from django import forms
-from .models import Booking
 
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['table', 'date', 'time']
+        fields = ['date', 'time', 'name', 'people']
 
 class AdminLoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -25,3 +22,8 @@ class AdminLoginForm(AuthenticationForm):
                 "This account does not have access to the admin site.",
                 code='no_admin_access',
             )
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']

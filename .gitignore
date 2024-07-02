@@ -91,4 +91,3 @@ Procfile
 
 # Ignore all settings.py files
 **/settings.py
-settings.py

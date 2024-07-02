@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const bookButton = document.querySelector('.book-button');
     const notification = document.querySelector('.notification');
+    const navMenuIcon = document.querySelector('.nav-menu-icon');
 
     if (bookButton) {
         bookButton.addEventListener('click', function(event) {
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
+    // Dropdown menu for user icon
     function showNotification(message) {
         notification.textContent = message;
         notification.classList.add('show');
@@ -22,12 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
             notification.classList.remove('show');
         }, 3000);
     }
-});
 
-// Dropdown menu for user icon
-document.addEventListener('DOMContentLoaded', function() {
-    const userIcon = document.querySelector('.user-icon img');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
+    if (navMenuIcon) {
+        navMenuIcon.addEventListener('click', function() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('show');
+        });
+    }
+    // Mobile menu
+    const userIcon = document.getElementById('userIcon');
+    const dropdownMenu = document.getElementById('dropdownMenu');
 
     if (userIcon && dropdownMenu) {
         userIcon.addEventListener('click', function() {

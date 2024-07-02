@@ -1,4 +1,4 @@
-/* Global Styles */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background: url('../assets/background/background_img.jpg') no-repeat center center fixed;
@@ -19,12 +19,33 @@ header {
     text-align: center;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    position: relative;
+    z-index: 1000;
 }
 
-/* Navigation Styles */
+nav {
+    position: relative;
+}
+
+.nav-menu-icon {
+    display: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.nav-menu-icon:before {
+    content: "\2630";
+    color: #fff;
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 nav ul li {
@@ -40,6 +61,35 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #f4a442;
+}
+
+@media (max-width: 768px) {
+    .nav-menu-icon {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: #000;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 0;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        display: block;
+        text-align: center;
+    }
+
+    .show {
+        display: flex;
+    }
 }
 
 /* Container Styles */
@@ -59,34 +109,45 @@ nav ul li a:hover {
     padding: 20px;
     margin: 100px auto;
     width: 90%;
-    max-width: 600px;
+    max-width: 800px; /* Увеличиваем максимальную ширину */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Input Styles */
-.input-container {
-    position: relative;
+/* Table Styles */
+.table-container {
+    margin-top: 20px;
+}
+
+.table-container h2 {
+    margin-bottom: 20px;
+}
+
+.open-time-table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #333; /* Фон таблицы */
+    color: #fff; /* Цвет текста */
 }
 
-.input-container i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #aaa;
+.open-time-table th, .open-time-table td {
+    padding: 15px; /* Увеличиваем отступы */
+    border: 1px solid #444; /* Темная граница */
+    text-align: center;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
-    width: calc(100% - 40px);
-    padding: 10px 10px 10px 40px;
-    margin: 10px auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fff;
-    color: #000;
-    display: block;
+.open-time-table th {
+    background-color: #444; /* Цвет заголовка таблицы */
+    font-weight: bold;
+}
+
+.open-time-table tr:nth-child(even) {
+    background-color: #555; /* Цвет для четных строк */
+}
+
+.open-time-table tr:hover {
+    background-color: #666; /* Цвет при наведении */
 }
 
 /* Button Styles */
@@ -106,6 +167,16 @@ button, .button, .btn {
 
 button:hover, .button:hover, .btn:hover {
     background-color: #e59500;
+}
+
+.btn-toggle {
+    background-color: #555; /* Цвет кнопок переключения */
+    color: #fff;
+    margin: 10px 5px;
+}
+
+.btn-toggle:hover {
+    background-color: #777;
 }
 
 /* Heading and Paragraph Styles */

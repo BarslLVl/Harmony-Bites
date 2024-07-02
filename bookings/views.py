@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
-from django.urls import reverse_lazy
-from .forms import SignUpForm, UserEditForm, BookingForm
+from .forms import SignUpForm, UserEditForm, BookingForm, AdminUserEditForm
 from .models import Booking, User
 
 class AdminLoginView(LoginView):
@@ -39,6 +38,9 @@ def about(request):
 def menu(request):
     return render(request, 'bookings/menu.html')
 
+def opening_times(request):
+    return render(request, 'bookings/opentimes.html')
+
 def contactus(request):
     return render(request, 'bookings/contactus.html')
 
@@ -52,14 +54,6 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-
-@login_required
-def admin_dashboard(request):
-    if not request.user.is_superuser:
-        return redirect('index')
-    users = User.objects.all()
-    bookings = Booking.objects.all()
-    return render(request, 'admin/admin_dashboard.html', {'users': users, 'bookings': bookings})
 
 @login_required
 def profile(request):
@@ -104,25 +98,31 @@ def edit_booking(request, pk):
         form = BookingForm(instance=booking)
     return render(request, 'admin/edit_booking.html', {'form': form})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_dashboard(request):
+    users = User.objects.all()
+    bookings = Booking.objects.all()
+    return render(request, 'admin/admin_dashboard.html', {'users': users, 'bookings': bookings})
+
+@user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
     users = User.objects.all()
     return render(request, 'admin/users.html', {'users': users})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def edit_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
-        form = UserEditForm(request.POST, instance=user)
+        form = AdminUserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'User updated successfully.')
             return redirect('admin_users')
     else:
-        form = UserEditForm(instance=user)
+        form = AdminUserEditForm(instance=user)
     return render(request, 'admin/edit_user.html', {'form': form})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':

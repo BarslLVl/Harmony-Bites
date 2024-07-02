@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'admin/admin_base.html' %}
 
-{% block title %}Delete User{% endblock %}
+{% block title %}Edit Booking{% endblock %}
 
 {% block content %}
-<div class="admin-form">
-    <h1>Delete User</h1>
-    <p>Are you sure you want to delete this user?</p>
+<div class="container">
+    <h2>Edit Booking</h2>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Confirm</button>
+        {{ form.as_p }}
+        <button type="submit" class="btn">Save</button>
     </form>
 </div>
 {% endblock %}

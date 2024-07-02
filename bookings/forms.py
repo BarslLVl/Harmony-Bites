@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Booking
 
@@ -27,3 +27,13 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username']
+
+class AdminUserEditForm(UserChangeForm):
+    password = forms.CharField(widget=forms.PasswordInput, required=False)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+
+    def clean_password(self):
+        return self.initial["password"]

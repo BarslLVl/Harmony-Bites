@@ -12,9 +12,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
+#DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
+DEBUG = False
 
-ALLOWED_HOSTS = []
+handler404 = 'your_app_name.views.custom_page_not_found_view'
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

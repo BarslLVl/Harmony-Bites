@@ -15,6 +15,9 @@ class UserLoginView(LoginView):
 def index(request):
     return render(request, 'bookings/index.html')
 
+def custom_page_not_found_view(request, exception):
+    return render(request, 'errors/404.html', status=404)
+
 @login_required
 def book_table(request):
     if request.method == 'POST':

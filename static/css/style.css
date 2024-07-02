@@ -494,3 +494,32 @@ footer a:hover {
     border-radius: 10px;
     overflow: hidden;
 }
+
+/* 404 Page Styles */
+.container {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.container h1 {
+    font-size: 100px;
+    margin-bottom: 20px;
+}
+
+.container p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.container .btn {
+    padding: 10px 20px;
+    background-color: #f4a442;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.container .btn:hover {
+    background-color: #e59500;
+}

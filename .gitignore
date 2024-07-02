@@ -79,3 +79,16 @@ ehthumbs.db
 *.iws
 .idea/
 .idea/**
+
+# Other
+*.pyc
+/static/
+
+
+# Ignore Procfile
+Procfile
+
+
+# Ignore all settings.py files
+**/settings.py
+settings.py

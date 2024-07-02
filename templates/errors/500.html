@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Error</title>
+    <title>Server Error (500)</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>500</h1>
-        <p>Oops! Something went wrong on our end. Please try again later.</p>
-        <a href="{% url 'home' %}" class="btn">Go to Home</a>
+    <div class="error-container">
+        <h1>Oops!</h1>
+        <h2>500 - Internal Server Error</h2>
+        <p>Something went wrong on our end. Please try again later.</p>
+        <a href="{% url 'home' %}" class="btn">Go Home</a>
     </div>
 </body>
 </html>

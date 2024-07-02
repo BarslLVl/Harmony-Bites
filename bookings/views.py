@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
-from .forms import SignUpForm, UserEditForm, BookingForm, AdminUserEditForm
+from .forms import SignUpForm, UserEditForm, BookingForm
 from .models import Booking, User
 
 class AdminLoginView(LoginView):
@@ -14,9 +14,6 @@ class UserLoginView(LoginView):
 
 def index(request):
     return render(request, 'bookings/index.html')
-
-def custom_page_not_found_view(request, exception):
-    return render(request, 'errors/404.html', status=404)
 
 @login_required
 def book_table(request):
@@ -116,13 +113,13 @@ def admin_users(request):
 def edit_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
-        form = AdminUserEditForm(request.POST, instance=user)
+        form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'User updated successfully.')
             return redirect('admin_users')
     else:
-        form = AdminUserEditForm(instance=user)
+        form = UserEditForm(instance=user)
     return render(request, 'admin/edit_user.html', {'form': form})
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -133,3 +130,12 @@ def delete_user(request, pk):
         messages.success(request, 'User deleted successfully.')
         return redirect('admin_users')
     return render(request, 'admin/confirm_delete.html', {'object': user})
+
+def custom_404(request, exception):
+    return render(request, 'errors/404.html', {}, status=404)
+
+def custom_500(request):
+    return render(request, 'errors/500.html', status=500)
+
+def trigger_error(request):
+    division_by_zero = 1 / 0

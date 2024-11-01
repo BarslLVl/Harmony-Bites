@@ -1,8 +1,5 @@
 # Harmony Bites
 
-[![Build Status](https://travis-ci.org/jyoung90ie/django-ecommerce.svg?branch=master)](https://travis-ci.org/jyoung90ie/django-ecommerce)
-[![codecov](https://codecov.io/gh/jyoung90ie/django-ecommerce/branch/master/graph/badge.svg)](https://codecov.io/gh/jyoung90ie/django-ecommerce)
-
 Harmony Bites is a project designed to create a seamless restaurant booking experience. It aims to provide users with an easy and efficient way to book tables at their favorite restaurants. This project showcases my learning and understanding of web development technologies and best practices.
 
 ## Deployed Application

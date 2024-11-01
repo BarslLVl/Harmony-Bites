@@ -8,7 +8,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['https://harmony-bites-753d102f24d0.herokuapp.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://harmony-bites-753d102f24d0.herokuapp.com/', 'harmony-bites-753d102f24d0.herokuapp.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
